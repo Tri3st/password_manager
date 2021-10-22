@@ -1,8 +1,18 @@
 from tkinter import *
+from password_generator import PasswordGenerator
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_random_password():
+    generated_password = PasswordGenerator(2, 8, 2)
+    passw = generated_password.get_pass()
+    input_password.delete(first=0, last=len(input_password.get()))
+    input_password.insert(index=0, string=passw)
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -40,7 +50,7 @@ label3.grid(row=3, column=0, sticky="e")
 input_password = Entry(width=40)
 input_password.grid(row=3, column=1)
 
-generate_pw_button = Button(text="Generate Password")
+generate_pw_button = Button(text="Generate Password", command=generate_random_password)
 generate_pw_button.grid(row=3, column=2, sticky="ew")
 
 # Add
