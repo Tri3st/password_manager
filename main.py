@@ -1,5 +1,8 @@
 from tkinter import *
 from password_generator import PasswordGenerator
+from password import Password
+
+my_data = []
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -11,7 +14,14 @@ def generate_random_password():
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def add_info():
+    # TODO validate info in Entry boxes and if all complete make and save password details
+    pass
 
+
+def save_password_details():
+    # TODO get validated info and make an object to store data in
+    my_pass = Password()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -54,8 +64,7 @@ generate_pw_button = Button(text="Generate Password", command=generate_random_pa
 generate_pw_button.grid(row=3, column=2, sticky="ew")
 
 # Add
-add_button = Button(text="Add")
+add_button = Button(text="Add", command=add_info)
 add_button.grid(row=4, column=1, columnspan=2, sticky="we")
-
 
 canvas.mainloop()
