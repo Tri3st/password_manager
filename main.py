@@ -1,9 +1,15 @@
+import json
+import tkinter.messagebox
 from tkinter import *
 from password_generator import PasswordGenerator
-import json, pandas
 
 my_data = []
-data_dict = {}
+
+
+def save_data():
+    global my_data
+    with open("./data/pwfile.json", "w") as json_file:
+        json.dump(my_data, json_file, indent=4)
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -34,11 +40,16 @@ def validate_password(password_string):
 
 
 def add_info():
-    unvalidated_website = input_website.get()
-    if validate_website(unvalidated_website):
-        validated_website = unvalidated_website
-    else:
-        validated_website = "INVALID WEBSITE FORMAT"
+    global my_data
+    while True:
+        unvalidated_website = input_website.get()
+        if validate_website(unvalidated_website):
+            validated_website = unvalidated_website
+            break
+        else:
+            input_website.delete(first=0, last=END)
+            tkinter.messagebox.showerror("ERROR!", "INVALID WEBSITE FORMAT")
+
     unvalidated_email = input_username.get()
     if validate_email(unvalidated_email):
         validated_email = unvalidated_email
@@ -49,6 +60,14 @@ def add_info():
         validated_password = unvalidated_password
     else:
         validated_password = "INVALID PASSWORD FORMAT"
+    data_dict = {"website": validated_website, "email": validated_email, "password": validated_password}
+    input_website.delete(first=0, last=END)
+    my_data.append(data_dict)
+    save_data()
+
+
+def search_website():
+    pass
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -94,8 +113,8 @@ generate_pw_button.grid(row=3, column=2, sticky="ew")
 add_button = Button(text="Add", command=add_info)
 add_button.grid(row=4, column=1, columnspan=2, sticky="we")
 
-with open("./data/pwfile.json") as data_file:
-    json_data = json.load(data_file)
+with open("./data/pwfile.json", "r") as data_file:
+    my_data = json.load(data_file)
 
 
 canvas.mainloop()

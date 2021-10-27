@@ -1,10 +1,17 @@
-[{
-  "website": "Amazon",
-  "email": "triest@gmail.com",
-  "password": "12345"
-},
-{
-  "website": "Ebay",
-  "email": "trie@gmail.com",
-  "password": "12345"
-}]
+[
+    {
+        "website": "Amazon",
+        "email": "triest@gmail.com",
+        "password": "12345"
+    },
+    {
+        "website": "Ebay",
+        "email": "trie@gmail.com",
+        "password": "12345"
+    },
+    {
+        "website": "Google.com",
+        "email": "Triest",
+        "password": "1W7PN!AuNUv$"
+    }
+]
