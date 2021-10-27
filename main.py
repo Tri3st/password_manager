@@ -6,6 +6,12 @@ from password_generator import PasswordGenerator
 my_data = []
 
 
+def clear_fields():
+    input_website.delete(first=0, last=END)
+    input_username.delete(first=0, last=END)
+    input_password.delete(first=0, last=END)
+
+
 def save_data():
     global my_data
     with open("./data/pwfile.json", "w") as json_file:
@@ -21,10 +27,22 @@ def generate_random_password():
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-def validate_website(website_string):
-    if not (4 < len(website_string) < 50):
-        return False
-    return True
+def validate():
+    unvalidated_website = input_website.get()
+    msg = ""
+    if len(unvalidated_website) == 0:
+        msg = "name can't be empty"
+    else:
+        try:
+            if len(unvalidated_website) <= 2:
+                msg = "Website name is too short"
+            elif len(unvalidated_website) > 40:
+                msg = "Max. length of website name = 40 chars"
+            else:
+                msg = "Succes!"
+        except Exception as ep:
+            tkinter.messagebox.showerror("Error", ep)
+    tkinter.messagebox.showinfo("Message", msg)
 
 
 def validate_email(email_string):
@@ -41,29 +59,18 @@ def validate_password(password_string):
 
 def add_info():
     global my_data
-    while True:
-        unvalidated_website = input_website.get()
-        if validate_website(unvalidated_website):
-            validated_website = unvalidated_website
-            break
-        else:
-            input_website.delete(first=0, last=END)
-            tkinter.messagebox.showerror("ERROR!", "INVALID WEBSITE FORMAT")
 
-    unvalidated_email = input_username.get()
-    if validate_email(unvalidated_email):
-        validated_email = unvalidated_email
-    else:
-        validated_email = "INVALID EMAIL FORMAT"
-    unvalidated_password = input_password.get()
-    if validate_password(unvalidated_password):
-        validated_password = unvalidated_password
-    else:
-        validated_password = "INVALID PASSWORD FORMAT"
+    validated_website = validate_website()
+    validated_email = input_username.get()
+
+    validated_password = input_password.get()
+
     data_dict = {"website": validated_website, "email": validated_email, "password": validated_password}
     input_website.delete(first=0, last=END)
     my_data.append(data_dict)
     save_data()
+    clear_fields()
+    tkinter.messagebox.showinfo("Done", f"{validated_website} saved succesfully.")
 
 
 def search_website():
